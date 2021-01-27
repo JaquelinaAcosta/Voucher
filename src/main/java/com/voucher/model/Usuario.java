@@ -11,8 +11,6 @@ public class Usuario {
 	private String email;
 	private String nombre;
 	private String apellido;
-	private String provincia;
-	private String localidad;
 	private String area;
 	private Boolean estado;
 	private String password;
@@ -26,14 +24,12 @@ public class Usuario {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Usuario(String _id, String email, String nombre, String apellido, String provincia, String localidad,
+	public Usuario(String _id, String email, String nombre, String apellido,
 			String area, Boolean estado, String password, Empresa empresa, Role role) {
 		this._id = _id;
 		this.email = email;
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.provincia = provincia;
-		this.localidad = localidad;
 		this.area = area;
 		this.estado = estado;
 		this.password = password;
@@ -79,22 +75,6 @@ public class Usuario {
 
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
-	}
-
-	public String getProvincia() {
-		return provincia;
-	}
-
-	public void setProvincia(String provincia) {
-		this.provincia = provincia;
-	}
-
-	public String getLocalidad() {
-		return localidad;
-	}
-
-	public void setLocalidad(String localidad) {
-		this.localidad = localidad;
 	}
 
 	public String getArea() {

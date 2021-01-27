@@ -1,5 +1,15 @@
 package com.voucher.repository;
 
-public class usuarioRepository {
+import java.util.Optional;
 
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+
+import com.voucher.model.Usuario;
+
+
+@Repository
+public interface UsuarioRepository extends MongoRepository<Usuario,String>{
+
+	Optional<Usuario> findById(String id);
 }

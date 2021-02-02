@@ -7,16 +7,13 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.voucher.model.Usuario;
-
+import com.voucher.model.Empresa;
 
 @Repository
-public interface UsuarioRepository extends MongoRepository<Usuario,String>{
-
-	Optional<Usuario> findById(String id);
+public interface EmpresaRepository extends MongoRepository<Empresa,String>{
+	
+	Optional<Empresa> findById(String id);
 	
 	@Query(value = "{'estado' : ?0}")
-	List<Usuario> findByEstado(Boolean estado);
-	
-	Usuario findByEmail(String email);
+	List<Empresa> findByEstado(Boolean estado);
 }

@@ -22,7 +22,6 @@ import com.voucher.services.UsuarioService;
 @RequestMapping("/api")
 public class UsuarioController {
 	
-	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	UsuarioService usuarioService;
@@ -49,10 +48,17 @@ public class UsuarioController {
 	}
 	
 	//listado de usuarios
-	@RequestMapping(value = "/usuario", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/usuario/todos", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Usuario> getUsuarios()
 	{
 		return usuarioService.getUsuarios();
+	}
+	
+	//listado de empresas activas
+	@RequestMapping(value = "/usuario", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Usuario> getUsuariosActivos()
+	{
+		return usuarioService.getUsuariosEstado();
 	}
 	
 }

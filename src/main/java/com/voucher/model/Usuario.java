@@ -1,6 +1,9 @@
 package com.voucher.model;
 
+import java.util.Set;
+
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
@@ -11,12 +14,13 @@ public class Usuario {
 	private String email;
 	private String nombre;
 	private String apellido;
-	private String area;
+	private String telefono;
 	private Boolean estado;
 	private String password;
+	@DBRef
 	private Empresa empresa;
-	private Role role;
-	
+	@DBRef
+	private Set<Role> role;
 	
 	
 	public Usuario() {
@@ -25,24 +29,20 @@ public class Usuario {
 	}
 
 	public Usuario(String _id, String email, String nombre, String apellido,
-			String area, Boolean estado, String password, Empresa empresa, Role role) {
+			String telefono, Boolean estado, String password, Empresa empresa, Set<Role> role) {
 		this._id = _id;
 		this.email = email;
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.area = area;
+		this.telefono = telefono;
 		this.estado = estado;
 		this.password = password;
 		this.empresa = empresa;
 		this.role = role;
 	}
-
-	enum Empresa{
-		CARSA, EMSA 
-	}
 	
 	enum Role{
-		VENTA, ADMIN_EMPRESA, OPERATIVO_EMPRESA, ADMIN_EMSA, ADMIN_GENERICO, VISTA
+		VENTA, ADMIN, OPERATIVO_EMPRESA, ADMIN_PARTNER, ROOT, VISTA
 	}
 
 	public String get_id() {
@@ -77,12 +77,12 @@ public class Usuario {
 		this.apellido = apellido;
 	}
 
-	public String getArea() {
-		return area;
+	public String getTelefono() {
+		return telefono;
 	}
 
-	public void setArea(String area) {
-		this.area = area;
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
 
 	public Boolean getEstado() {
@@ -109,11 +109,11 @@ public class Usuario {
 		this.empresa = empresa;
 	}
 
-	public Role getRole() {
-		return role;
+	public Set<Role> getRole() {
+		return  role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(Set<Role> role) {
 		this.role = role;
 	}
 	

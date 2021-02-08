@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,7 +35,7 @@ public class UsuarioServicesImpl implements UsuarioService{
 	@Inject
 	private RoleRepository roleRepository;
 	
-	@Inject
+	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	private static final Log logger = LogFactory.getLog(UsuarioServicesImpl.class);
@@ -44,7 +45,7 @@ public class UsuarioServicesImpl implements UsuarioService{
 		logger.info("ALTA USUARIO");
 		validarUsuario(usuario);
 		usuario.setEstado(true);
-		 Role userRole = roleRepository.findByRole("ADMIN");
+		// Role userRole = roleRepository.findByRole("ADMIN");
 		// usuario.setRole(new HashSet<>(Arrays.asList(userRole)));
 		usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
 		Usuario usuarioAdd = usuarioRepository.save(usuario);

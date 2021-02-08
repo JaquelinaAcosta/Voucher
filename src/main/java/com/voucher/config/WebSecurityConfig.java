@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,10 +18,11 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity( prePostEnabled = true, 
-securedEnabled = true, 
-jsr250Enabled = true) //las 3 anotaciones definen lo mismo, el uso de roles
+@Order(1)
+//@EnableWebSecurity
+//@EnableGlobalMethodSecurity( prePostEnabled = true, 
+//securedEnabled = true, 
+//jsr250Enabled = true) //las 3 anotaciones definen lo mismo, el uso de roles
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
@@ -36,13 +38,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
-
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 	    BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 	    return bCryptPasswordEncoder;
 	}
-	
+/*	
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 	    CorsConfiguration configuration = new CorsConfiguration();
@@ -56,5 +57,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	    source.registerCorsConfiguration("/**", configuration);
 	    return source;
 	}
-	
+	*/
 }

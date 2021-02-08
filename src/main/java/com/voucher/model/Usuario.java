@@ -20,7 +20,7 @@ public class Usuario {
 	@DBRef
 	private Empresa empresa;
 	@DBRef
-	private Set<Role> role;
+	private Role role;
 	
 	
 	public Usuario() {
@@ -29,7 +29,7 @@ public class Usuario {
 	}
 
 	public Usuario(String _id, String email, String nombre, String apellido,
-			String telefono, Boolean estado, String password, Empresa empresa, Set<Role> role) {
+			String telefono, Boolean estado, String password, Empresa empresa, Role role) {
 		this._id = _id;
 		this.email = email;
 		this.nombre = nombre;
@@ -41,10 +41,10 @@ public class Usuario {
 		this.role = role;
 	}
 	
-	enum Role{
+/*	enum Role{
 		VENTA, ADMIN, OPERATIVO_EMPRESA, ADMIN_PARTNER, ROOT, VISTA
 	}
-
+*/
 	public String get_id() {
 		return _id;
 	}
@@ -109,11 +109,11 @@ public class Usuario {
 		this.empresa = empresa;
 	}
 
-	public Set<Role> getRole() {
+	public Role getRole() {
 		return  role;
 	}
 
-	public void setRole(Set<Role> role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 	

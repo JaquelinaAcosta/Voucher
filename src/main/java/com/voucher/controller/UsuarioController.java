@@ -30,14 +30,14 @@ public class UsuarioController {
 	
 	
 	//alta usuario
-	@RequestMapping(value = "/usuario", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
-			consumes=MediaType.APPLICATION_JSON_VALUE)
-			public Usuario addUsuario(@RequestBody @Valid Usuario usuario) throws Exception {
-				return usuarioService.addUsuario(usuario);	
-			}
+	@RequestMapping(value = "/usuario/alta", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
+	consumes=MediaType.APPLICATION_JSON_VALUE)
+	public Usuario save(@RequestBody @Valid Usuario usuario) throws Exception {
+		return usuarioService.addUsuario(usuario);	
+	}
 	
 	//modificacion de usuario
-	@RequestMapping(value = "/usuario", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE,
+	@RequestMapping(value = "/usuario/modificacion", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE,
 	consumes=MediaType.APPLICATION_JSON_VALUE)
 	public Usuario updateUsuario(@RequestBody @Valid Usuario usuario) throws Exception {
 		return usuarioService.updateUsuario(usuario);	

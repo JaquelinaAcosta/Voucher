@@ -10,6 +10,6 @@ public interface UsuarioService {
 	Usuario updateUsuario(Usuario usuario) throws Exception;
 	Usuario deleteUsuario(String usuarioId);
 	List<Usuario> getUsuarios();
-	
+	Usuario getUsuario(String email);
 	List<Usuario> getUsuariosEstado();
 }

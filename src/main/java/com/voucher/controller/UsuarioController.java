@@ -1,5 +1,6 @@
 package com.voucher.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,11 +26,8 @@ import com.voucher.services.UsuarioService;
 @RestController
 @RequestMapping("/api")
 public class UsuarioController {
-	
-
 	@Autowired
 	UsuarioService usuarioService;
-	
 	
 	//alta usuario
 	@RequestMapping(value = "/usuario/alta", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
@@ -39,7 +39,7 @@ public class UsuarioController {
 	//modificacion de usuario
 	@RequestMapping(value = "/usuario/modificacion", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE,
 	consumes=MediaType.APPLICATION_JSON_VALUE)
-	public Usuario updateUsuario(@RequestBody @Valid Usuario usuario) throws Exception {
+	public Usuario update(@RequestBody @Valid Usuario usuario) throws Exception {
 		return usuarioService.updateUsuario(usuario);	
 	}
 	
@@ -63,13 +63,16 @@ public class UsuarioController {
 		}
 		
 		return usuariosReturn;
-	}
+	}	
 	
-	//listado de empresas activas
-	@RequestMapping(value = "/usuario", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<Usuario> getUsuariosActivos()
-	{
-		return usuarioService.getUsuariosEstado();
-	}
-	
+	//Usuario logueado
+	@GetMapping("/userDetails")
+	public Usuario userDetails(@AuthenticationPrincipal Principal principal) throws Exception {
+		String email = principal.getName();
+		Usuario user = usuarioService.getUsuario(email);
+		if (user == null) {
+			throw new Exception("Usuario inexistente");
+		}
+		return user;
+	}	
 }

@@ -91,4 +91,9 @@ public class UsuarioServicesImpl implements UsuarioService{
 		List<Usuario> usuarios = usuarioRepository.findByEstado(true);
 		return usuarios;
 	}
+
+	@Override
+	public Usuario getUsuario(String email) {
+		return usuarioRepository.findByEmail(email);
+	}
 }

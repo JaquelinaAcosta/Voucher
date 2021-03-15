@@ -66,9 +66,8 @@ public class UsuarioController {
 	}	
 	
 	//Usuario logueado
-	@GetMapping("/userDetails")
-	public Usuario userDetails(@AuthenticationPrincipal Principal principal) throws Exception {
-		String email = principal.getName();
+	@RequestMapping(value = "/usuario/{email}", method = RequestMethod.GET)
+	public Usuario userDetails(@PathVariable String email) throws Exception {
 		Usuario user = usuarioService.getUsuario(email);
 		if (user == null) {
 			throw new Exception("Usuario inexistente");

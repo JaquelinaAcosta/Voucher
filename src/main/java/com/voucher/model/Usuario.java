@@ -1,5 +1,6 @@
 package com.voucher.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.data.annotation.Id;
@@ -20,16 +21,16 @@ public class Usuario {
 	@DBRef
 	private Empresa empresa;
 	@DBRef
-	private Role role;
+	private Set<Role> roles = new HashSet<>();
 	
-	
+
 	public Usuario() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	public Usuario(String _id, String email, String nombre, String apellido,
-			String telefono, Boolean estado, String password, Empresa empresa, Role role) {
+			String telefono, Boolean estado, String password) {
 		this._id = _id;
 		this.email = email;
 		this.nombre = nombre;
@@ -37,8 +38,6 @@ public class Usuario {
 		this.telefono = telefono;
 		this.estado = estado;
 		this.password = password;
-		this.empresa = empresa;
-		this.role = role;
 	}
 	
 /*	enum Role{
@@ -109,13 +108,13 @@ public class Usuario {
 		this.empresa = empresa;
 	}
 
-	public Role getRole() {
-		return  role;
-	}
+	  public Set<Role> getRoles() {
+		    return roles;
+		  }
 
-	public void setRole(Role role) {
-		this.role = role;
-	}
+		  public void setRoles(Set<Role> roles) {
+		    this.roles = roles;
+		  }
 	
 	
 }

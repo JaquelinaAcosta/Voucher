@@ -34,6 +34,11 @@
 			<scope>test</scope>
 		</dependency>
 		
+			<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
 			<!-- Security -->
 		<dependency>
 			<groupId>org.springframework.security.oauth</groupId>
@@ -71,6 +76,12 @@
 	        <artifactId>mongo-java-driver</artifactId>
 	        <version>3.4.1</version>
 	    </dependency>
+	
+	<dependency>
+    <groupId>jakarta.xml.bind</groupId>
+    <artifactId>jakarta.xml.bind-api</artifactId>
+</dependency>
+	
 	</dependencies>
 
 	<build>

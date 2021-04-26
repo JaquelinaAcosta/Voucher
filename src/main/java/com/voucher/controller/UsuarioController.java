@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,36 +29,36 @@ import com.voucher.services.UsuarioService;
 public class UsuarioController {
 	@Autowired
 	UsuarioService usuarioService;
-	
 	//alta usuario
 	@RequestMapping(value = "/usuario/alta", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
 	consumes=MediaType.APPLICATION_JSON_VALUE)
 	public Usuario save(@RequestBody @Valid Usuario usuario) throws Exception {
 		return usuarioService.addUsuario(usuario);	
 	}
-	
 	//modificacion de usuario
 	@RequestMapping(value = "/usuario/modificacion", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE,
 	consumes=MediaType.APPLICATION_JSON_VALUE)
 	public Usuario update(@RequestBody @Valid Usuario usuario) throws Exception {
 		return usuarioService.updateUsuario(usuario);	
 	}
-	
+
 	//baja usuario
 	@RequestMapping(value = "/usuario/{usuarioId}", method = RequestMethod.DELETE)
+	@PreAuthorize("hasRole('ADMIN')")
 	public Usuario deleteUsuario(@PathVariable String usuarioId){
 		return this.usuarioService.deleteUsuario(usuarioId);
 	}
 	
 	//listado de usuarios
 	@RequestMapping(value = "/usuario/todos", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('USER')")
 	public List<Usuario> getUsuarios()
 	{
 		List<Usuario> usuarios = usuarioService.getUsuarios();
 		ArrayList<Usuario> usuariosReturn = new ArrayList<Usuario>();
-		
+		// && usu.getEmpresa() != null
 		for(Usuario usu: usuarios) {
-			if(usu.getRole() != null && usu.getEmpresa() != null) {
+			if(usu.getRoles() != null) {
 				usuariosReturn.add(usu);
 			}
 		}
@@ -74,4 +75,11 @@ public class UsuarioController {
 		}
 		return user;
 	}	
+
+	@PreAuthorize("hasRole('USER')")
+	@RequestMapping(value = "/usuario/admin", method = RequestMethod.GET)
+	public String moderatorAccess() {
+		return "Moderator Board.";
+	}
+
 }

@@ -13,7 +13,6 @@ import com.voucher.model.Empresa;
 public interface EmpresaRepository extends MongoRepository<Empresa,String>{
 	
 	Optional<Empresa> findById(String id);
-	
 	@Query(value = "{'estado' : ?0}")
 	List<Empresa> findByEstado(Boolean estado);
 }

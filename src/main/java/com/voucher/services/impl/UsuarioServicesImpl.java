@@ -1,45 +1,55 @@
 package com.voucher.services.impl;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
+
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import com.voucher.model.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.voucher.model.Usuario;
 import com.voucher.repository.RoleRepository;
 import com.voucher.repository.UsuarioRepository;
 import com.voucher.services.UsuarioService;
 
-import ch.qos.logback.core.boolex.Matcher;
+
 
 @Service
 @EnableWebSecurity
 public class UsuarioServicesImpl implements UsuarioService{
 	
+private static final Log logger = LogFactory.getLog(UsuarioServicesImpl.class);
 	@Inject
 	private UsuarioRepository usuarioRepository;
-	
 	@Inject
 	private RoleRepository roleRepository;
 	
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
-	private static final Log logger = LogFactory.getLog(UsuarioServicesImpl.class);
+	private String id;
 
+	private String email;
+	private String Username;
+	@JsonIgnore
+	private String password;
+	private Collection<? extends GrantedAuthority> authorities;
+	
+	public UsuarioServicesImpl() {
+	}
+	
 	@Override
 	public Usuario addUsuario(Usuario usuario) throws Exception {
 		logger.info("ALTA USUARIO");
@@ -47,7 +57,7 @@ public class UsuarioServicesImpl implements UsuarioService{
 		usuario.setEstado(true);
 		// Role userRole = roleRepository.findByRole("ADMIN");
 		// usuario.setRole(new HashSet<>(Arrays.asList(userRole)));
-		usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
+		//usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
 		Usuario usuarioAdd = usuarioRepository.save(usuario);
 		return usuarioAdd;
 	}
@@ -96,4 +106,61 @@ public class UsuarioServicesImpl implements UsuarioService{
 	public Usuario getUsuario(String email) {
 		return usuarioRepository.findByEmail(email);
 	}
+
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public String getEmail() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public UserDetails loadUserByUsername(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

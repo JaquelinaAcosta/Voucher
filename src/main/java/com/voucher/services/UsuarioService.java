@@ -1,8 +1,17 @@
 package com.voucher.services;
 
+import java.util.Collection;
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.GrantedAuthority;
+
+import org.springframework.transaction.annotation.Transactional;
+
 import com.voucher.model.Usuario;
+
 
 public interface UsuarioService {
 
@@ -12,4 +21,13 @@ public interface UsuarioService {
 	List<Usuario> getUsuarios();
 	Usuario getUsuario(String email);
 	List<Usuario> getUsuariosEstado();
+	String getPassword();
+	boolean isAccountNonExpired();
+	boolean isAccountNonLocked();
+	boolean isCredentialsNonExpired();
+	boolean isEnabled();
+	Collection<? extends GrantedAuthority> getAuthorities();
+	String getEmail();
+	UserDetails loadUserByUsername(String email);
+
 }

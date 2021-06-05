@@ -51,7 +51,7 @@ public class UsuarioController {
 	
 	//listado de usuarios
 	@RequestMapping(value = "/usuario/todos", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-	@PreAuthorize("hasRole('USER')")
+	//@PreAuthorize("hasRole('USER')")
 	public List<Usuario> getUsuarios()
 	{
 		List<Usuario> usuarios = usuarioService.getUsuarios();

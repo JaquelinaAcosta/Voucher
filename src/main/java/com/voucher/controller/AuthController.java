@@ -34,7 +34,7 @@ import com.voucher.services.impl.UserDetailsImpl;
 import com.voucher.services.impl.UsuarioServicesImpl;
 
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {

@@ -29,5 +29,8 @@ public interface UsuarioService {
 	Collection<? extends GrantedAuthority> getAuthorities();
 	String getEmail();
 	UserDetails loadUserByUsername(String email);
+	void updatePassword(String email,String password)throws Exception;
+	
+	
 
 }

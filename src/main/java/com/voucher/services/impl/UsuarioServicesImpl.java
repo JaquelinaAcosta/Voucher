@@ -17,6 +17,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -36,16 +37,10 @@ public class UsuarioServicesImpl implements UsuarioService{
 private static final Log logger = LogFactory.getLog(UsuarioServicesImpl.class);
 	@Inject
 	private UsuarioRepository usuarioRepository;
-	@Inject
-	private RoleRepository roleRepository;
-	
-	private String id;
-
-	private String email;
-	private String Username;
 	@JsonIgnore
 	private String password;
-	private Collection<? extends GrantedAuthority> authorities;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	public UsuarioServicesImpl() {
 	}
@@ -78,7 +73,16 @@ private static final Log logger = LogFactory.getLog(UsuarioServicesImpl.class);
 	public Usuario updateUsuario(Usuario usuario) throws Exception {
 		logger.info("MODIFICACIÓN USUARIO");
 		validarUsuario(usuario);
-		Usuario usuarioUpdate = usuarioRepository.save(usuario);
+		Usuario update=usuarioRepository.findByEmail(usuario.getEmail());
+		update.setApellido(usuario.getApellido());
+		update.setEmpresa(usuario.getEmpresa());
+		update.setEstado(usuario.getEstado());
+		update.setNombre(usuario.getNombre());
+		update.setRoles(usuario.getRoles());
+		update.setTelefono(usuario.getTelefono());
+		Usuario usuarioUpdate = usuarioRepository.save(update);
+		
+		
 		return usuarioUpdate;
 	}
 
@@ -156,11 +160,16 @@ private static final Log logger = LogFactory.getLog(UsuarioServicesImpl.class);
 		return null;
 	}
 
-
 	@Override
 	public UserDetails loadUserByUsername(String email) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	@Override
+	public void  updatePassword(String email, String password)throws Exception{
+		// TODO Auto-generated method stub
+		Usuario user = usuarioRepository.findByEmail(email);
+		user.setPassword(passwordEncoder.encode(password));
+		usuarioRepository.save(user);
+	}
 }

@@ -84,7 +84,8 @@ public class AuthController {
 					.body(new MessageResponse("Error: El Email ya esta registrado!"));
 		}
 		
-		if(userRepository.existsByNombre(signUpRequest.getUsername())) {
+		
+		if(userRepository.existsByNombre(signUpRequest.getNombre())) {
 			return ResponseEntity
 					.badRequest()
 					.body(new MessageResponse("Error: El Usuario ya esta registrado!"));
@@ -97,9 +98,9 @@ public class AuthController {
 		user.setEmail(signUpRequest.getEmail());
 		//user.setEmpresa(signUpRequest.getEmpresa());
 		user.setEstado(signUpRequest.getEstado());
-		user.setNombre(signUpRequest.getUsername());
+		user.setNombre(signUpRequest.getNombre());
 		user.setPassword(encoder.encode(signUpRequest.getPassword()));
-		user.setTelefono(signUpRequest.getTelefono());
+		//user.setTelefono(signUpRequest.getTelefono());
 		Set<String> strRoles = signUpRequest.getRoles();
 		Set<Role> roles = new HashSet<>();
 		if(strRoles==null) {

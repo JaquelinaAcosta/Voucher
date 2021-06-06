@@ -6,21 +6,22 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.voucher.model.Usuario;
+import com.voucher.model.Request.updatePasswordRequest;
 import com.voucher.services.UsuarioService;
 
 @CrossOrigin
@@ -29,13 +30,6 @@ import com.voucher.services.UsuarioService;
 public class UsuarioController {
 	@Autowired
 	UsuarioService usuarioService;
-	//alta usuario
-	/*@RequestMapping(value = "/usuario/alta", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
-	consumes=MediaType.APPLICATION_JSON_VALUE)
-	public Usuario save(@RequestBody @Valid Usuario usuario) throws Exception {
-		return usuarioService.addUsuario(usuario);	
-	}*/
-	
 	//modificacion de usuario
 	@RequestMapping(value = "/usuario/modificacion", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE,
 	consumes=MediaType.APPLICATION_JSON_VALUE)
@@ -43,14 +37,25 @@ public class UsuarioController {
 		return usuarioService.updateUsuario(usuario);	
 	}
 
-	//baja usuario
+    @RequestMapping(value="/usuario/modificarPassword",method = RequestMethod.PUT ,produces = MediaType.APPLICATION_JSON_VALUE, consumes =MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> updatePassword(@RequestBody @Valid updatePasswordRequest  updatepasswordrequest) throws Exception{
+    	try {		
+    		if (updatepasswordrequest.getEmail()==null || updatepasswordrequest.getPassword()==null) {
+    			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se recibio datos");
+    		}
+    		usuarioService.updatePassword(updatepasswordrequest.getEmail(),updatepasswordrequest.getPassword());
+    	} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+    	return ResponseEntity.ok("Se modifico contrasenia correctamente");
+    }
+    
 	@RequestMapping(value = "/usuario/{usuarioId}", method = RequestMethod.DELETE)
 	//@PreAuthorize("hasRole('ADMIN')")
 	public Usuario deleteUsuario(@PathVariable String usuarioId){
 		return this.usuarioService.deleteUsuario(usuarioId);
 	}
 	
-	//listado de usuarios
 	@RequestMapping(value = "/usuario/todos", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	//@PreAuthorize("hasRole('USER')")
 	public List<Usuario> getUsuarios()
@@ -67,7 +72,6 @@ public class UsuarioController {
 		return usuariosReturn;
 	}	
 	
-	//Usuario logueado
 	@RequestMapping(value = "/usuario/{email}", method = RequestMethod.GET)
 	public Usuario userDetails(@PathVariable String email) throws Exception {
 		Usuario user = usuarioService.getUsuario(email);
@@ -82,5 +86,5 @@ public class UsuarioController {
 	public String moderatorAccess() {
 		return "Moderator Board.";
 	}
-
+	
 }

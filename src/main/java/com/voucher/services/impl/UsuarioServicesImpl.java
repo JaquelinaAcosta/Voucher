@@ -73,7 +73,16 @@ private static final Log logger = LogFactory.getLog(UsuarioServicesImpl.class);
 	public Usuario updateUsuario(Usuario usuario) throws Exception {
 		logger.info("MODIFICACIÓN USUARIO");
 		validarUsuario(usuario);
-		Usuario usuarioUpdate = usuarioRepository.save(usuario);
+		Usuario update=usuarioRepository.findByEmail(usuario.getEmail());
+		update.setApellido(usuario.getApellido());
+		update.setEmpresa(usuario.getEmpresa());
+		update.setEstado(usuario.getEstado());
+		update.setNombre(usuario.getNombre());
+		update.setRoles(usuario.getRoles());
+		update.setTelefono(usuario.getTelefono());
+		Usuario usuarioUpdate = usuarioRepository.save(update);
+		
+		
 		return usuarioUpdate;
 	}
 

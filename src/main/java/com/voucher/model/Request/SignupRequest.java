@@ -13,29 +13,28 @@ import com.voucher.model.Role;
 
 public class SignupRequest {
 	
-	@NotBlank
-    @Size(min = 3, max = 20)
-    private String username;
+    @NotBlank
+    @Size(min=3,max=20)
+	private String nombre;		
     @NotBlank
     @Size(max = 50)
     @Email
     private String email;
     private String apellido;
-    private String telefono;
     private Boolean estado;
     private Set<String> roles;
     @NotBlank
     @Size(min = 6, max = 40)
     private String password;
   
-    public String getUsername() {
-        return username;
+    public String getNombre() {
+    	return nombre;
     }
- 
-    public void setUsername(String username) {
-        this.username = username;
+    
+    public void setNombre(String nombre) {
+    	this.nombre=nombre;
     }
- 
+    
     public String getEmail() {
         return email;
     }
@@ -67,13 +66,6 @@ public class SignupRequest {
 		this.apellido = apellido;
 	}
     
-	public String getTelefono() {
-		return telefono;
-	}
-
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
 	public Boolean getEstado() {
 		return estado;
 	}

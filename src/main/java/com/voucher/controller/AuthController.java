@@ -104,22 +104,39 @@ public class AuthController {
 		Set<String> strRoles = signUpRequest.getRoles();
 		Set<Role> roles = new HashSet<>();
 		if(strRoles==null) {
-			Role userRole = roleRepository.findByName(ERole.ROLE_USER);
+			Role userRole = roleRepository.findByName(ERole.VISTA);
 			roles.add(userRole);		
 		}
 		else {
 			strRoles.forEach(rol->{
 				switch (rol) {
-				case "Admin":
-					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN);
-					roles.add(adminRole);
-			roles.add(adminRole);
-				case "Operativo":
-					Role modRole=roleRepository.findByName(ERole.OPERATIVO_EMPRESA);
-					roles.add(modRole);
+				case "ADMIN_PARTNER":
+					Role role1=roleRepository.findByName(ERole.ADMIN_PARTNER);
+					roles.add(role1);
+					break;
+				case "ROOT":
+					Role role2=roleRepository.findByName(ERole.ROOT);
+					roles.add(role2);
+					break;
+				case "ADMIN":
+					Role role3=roleRepository.findByName(ERole.ADMIN);
+					roles.add(role3);
+					break;
+				case "VENTA":
+					Role role4 = roleRepository.findByName(ERole.VENTA);
+					roles.add(role4);
+					break;
+				case "OPERATIVO_EMPRESA":
+					Role role5=roleRepository.findByName(ERole.OPERATIVO_EMPRESA);
+					roles.add(role5);
+					break;
+				case "VISTA":
+					Role role6=roleRepository.findByName(ERole.VISTA);
+					roles.add(role6);
+					break;
 				default:
-					Role userRole=roleRepository.findByName(ERole.ROLE_USER);
-					roles.add(userRole);
+					Role role7=roleRepository.findByName(ERole.VISTA);
+					roles.add(role7);
 					break;
 				}
 					});

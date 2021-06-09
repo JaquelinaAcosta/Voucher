@@ -1,9 +1,10 @@
 package com.voucher.model;
 
 public enum ERole {
-ROLE_USER,
-OPERATIVO_EMPRESA,
-ROLE_ADMIN,
-ADMIN_PARTNER,
-ROOT
+	ADMIN_PARTNER,
+	ROOT,
+	ADMIN,
+	VENTA,
+	OPERATIVO_EMPRESA,
+	VISTA
 }

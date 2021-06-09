@@ -22,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.voucher.model.Usuario;
 import com.voucher.model.Request.updatePasswordRequest;
+import com.voucher.model.Request.usuModifRequest;
 import com.voucher.services.UsuarioService;
 
 @CrossOrigin
@@ -38,8 +39,8 @@ public class UsuarioController {
 	
 	@RequestMapping(value = "/usuario/modificacion", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE,
 	consumes=MediaType.APPLICATION_JSON_VALUE)
-	public Usuario update(@RequestBody @Valid Usuario usuario) throws Exception {
-		return usuarioService.updateUsuario(usuario);	
+	public Usuario update( @RequestBody @Valid usuModifRequest usumodifrequest) throws Exception {
+		return usuarioService.updateUsuario(usumodifrequest);	
 	}
 
     @RequestMapping(value="/usuario/modificarPassword",method = RequestMethod.PUT ,produces = MediaType.APPLICATION_JSON_VALUE, consumes =MediaType.APPLICATION_JSON_VALUE)

@@ -103,27 +103,34 @@ public class AuthController {
 		//user.setTelefono(signUpRequest.getTelefono());
 		Set<String> strRoles = signUpRequest.getRoles();
 		Set<Role> roles = new HashSet<>();
-		if(strRoles==null) {
-			Role userRole = roleRepository.findByName(ERole.ROLE_USER);
-			roles.add(userRole);		
-		}
-		else {
+
 			strRoles.forEach(rol->{
 				switch (rol) {
 				case "Admin":
 					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN);
 					roles.add(adminRole);
-			roles.add(adminRole);
+					break;
 				case "Operativo":
 					Role modRole=roleRepository.findByName(ERole.OPERATIVO_EMPRESA);
 					roles.add(modRole);
+					break;
+				case "User":
+					Role userRole=roleRepository.findByName(ERole.ROLE_USER);
+					roles.add(userRole);
+					break;
+				/*
 				default:
 					Role userRole=roleRepository.findByName(ERole.ROLE_USER);
 					roles.add(userRole);
 					break;
+					*/
 				}
 					});
-}
+			
+			if(roles.size()<=0) {
+				Role userRole = roleRepository.findByName(ERole.ROLE_USER);
+				roles.add(userRole);		
+			}
 		user.setRoles(roles);
 		userRepository.save(user);	
 		//usuService.addUsuario(user);

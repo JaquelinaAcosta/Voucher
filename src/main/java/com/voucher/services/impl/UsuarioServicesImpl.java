@@ -2,8 +2,10 @@ package com.voucher.services.impl;
 
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -22,8 +24,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.voucher.model.ERole;
+import com.voucher.model.Empresa;
+import com.voucher.model.Role;
 import com.voucher.model.Usuario;
+import com.voucher.model.Request.usuModifRequest;
+import com.voucher.repository.EmpresaRepository;
 import com.voucher.repository.RoleRepository;
 import com.voucher.repository.UsuarioRepository;
 import com.voucher.services.UsuarioService;
@@ -37,6 +43,11 @@ public class UsuarioServicesImpl implements UsuarioService{
 private static final Log logger = LogFactory.getLog(UsuarioServicesImpl.class);
 	@Inject
 	private UsuarioRepository usuarioRepository;
+	@Inject
+	private EmpresaRepository empresaRepository;
+	@Inject
+	private RoleRepository roleRepository;
+	
 	@JsonIgnore
 	private String password;
 	@Autowired
@@ -70,19 +81,36 @@ private static final Log logger = LogFactory.getLog(UsuarioServicesImpl.class);
 	}
 
 	@Override
-	public Usuario updateUsuario(Usuario usuario) throws Exception {
+	public Usuario updateUsuario(usuModifRequest usumodifrequest) throws Exception {
 		logger.info("MODIFICACIÓN USUARIO");
-		validarUsuario(usuario);
-		Usuario update=usuarioRepository.findByEmail(usuario.getEmail());
-		update.setApellido(usuario.getApellido());
-		update.setEmpresa(usuario.getEmpresa());
-		update.setEstado(usuario.getEstado());
-		update.setNombre(usuario.getNombre());
-		update.setRoles(usuario.getRoles());
-		update.setTelefono(usuario.getTelefono());
+		//validarUsuario(usumodifrequest);
+		Usuario update=usuarioRepository.findByEmail(usumodifrequest.getEmail());
+		Empresa empresa=empresaRepository.findByempresa(usumodifrequest.getEmpresa());
+		Set<String> strRoles = usumodifrequest.getRoles();
+		Set<Role> roles = new HashSet<>();
+		strRoles.forEach(rol->{
+			switch (rol) {
+			case "Admin":
+				Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN);
+				roles.add(adminRole);
+				break;
+			case "Operativo":
+				Role modRole=roleRepository.findByName(ERole.OPERATIVO_EMPRESA);
+				roles.add(modRole);
+				break;
+			case "User":
+				Role userRole=roleRepository.findByName(ERole.ROLE_USER);
+				roles.add(userRole);
+				break;
+			}
+				});
+		update.setRoles(roles);
+		update.setApellido(usumodifrequest.getApellido());
+		update.setEmpresa(empresa);
+		update.setEstado(usumodifrequest.getEstado());
+		update.setNombre(usumodifrequest.getNombre());
+		update.setTelefono(usumodifrequest.getTelefono());
 		Usuario usuarioUpdate = usuarioRepository.save(update);
-		
-		
 		return usuarioUpdate;
 	}
 

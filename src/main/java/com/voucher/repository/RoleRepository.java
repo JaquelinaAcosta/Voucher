@@ -9,5 +9,6 @@ import com.voucher.model.Role;
 public interface RoleRepository extends MongoRepository<Role,String>{
 	 Role findByName(ERole name);
 	 //Role findByRole(ERole name);
+	 Role findByName(String name);
 
 }

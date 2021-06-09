@@ -11,12 +11,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.voucher.model.Usuario;
+import com.voucher.model.Request.usuModifRequest;
 
 
 public interface UsuarioService {
 
 	Usuario addUsuario(Usuario usuario) throws Exception;
-	Usuario updateUsuario(Usuario usuario) throws Exception;
+	Usuario updateUsuario(usuModifRequest usumodifrequest) throws Exception;
 	Usuario deleteUsuario(String usuarioId);
 	List<Usuario> getUsuarios();
 	Usuario getUsuario(String email);

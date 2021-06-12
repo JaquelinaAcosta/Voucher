@@ -52,13 +52,11 @@ public class UsuarioController {
     }
     
 	@RequestMapping(value = "/usuario/{usuarioId}", method = RequestMethod.DELETE)
-	//@PreAuthorize("hasRole('ADMIN')")
 	public Usuario deleteUsuario(@PathVariable String usuarioId){
 		return this.usuarioService.deleteUsuario(usuarioId);
 	}
 	
 	@RequestMapping(value = "/usuario/todos", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-	//@PreAuthorize("hasRole('USER')")
 	public List<Usuario> getUsuarios()
 	{
 		List<Usuario> usuarios = usuarioService.getUsuarios();
@@ -80,12 +78,6 @@ public class UsuarioController {
 			throw new Exception("Usuario inexistente");
 		}
 		return user;
-	}	
-
-	//@PreAuthorize("hasRole('USER')")
-	@RequestMapping(value = "/usuario/admin", method = RequestMethod.GET)
-	public String moderatorAccess() {
-		return "Moderator Board.";
 	}
 	
 }

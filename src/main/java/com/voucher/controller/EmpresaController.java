@@ -26,10 +26,10 @@ public class EmpresaController {
 	
 		//alta empresa
 		@RequestMapping(value = "/empresa", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
-				consumes=MediaType.APPLICATION_JSON_VALUE)
-				public Empresa addUsuario(@RequestBody @Valid Empresa empresa) throws Exception {
-					return empresaService.addEmpresa(empresa);	
-				}
+		consumes=MediaType.APPLICATION_JSON_VALUE)
+		public Empresa addUsuario(@RequestBody @Valid Empresa empresa) throws Exception {
+			return empresaService.addEmpresa(empresa);	
+		}
 		
 		//modificacion empresa
 		@RequestMapping(value = "/empresa", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE,
@@ -52,10 +52,8 @@ public class EmpresaController {
 		}
 		
 		//listado de empresas activas
-				@RequestMapping(value = "/empresa", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-				public List<Empresa> getEmpresasActivas()
-				{
-					return empresaService.getEmpresasestado();
-				}
-
+		public List<Empresa> getEmpresasActivas()
+		{
+			return empresaService.getEmpresasestado();
+		}
 }

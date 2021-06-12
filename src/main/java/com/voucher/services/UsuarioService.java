@@ -1,6 +1,7 @@
 package com.voucher.services;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.voucher.model.Usuario;
+import com.voucher.model.Request.userRecoveryPass;
 import com.voucher.model.Request.usuModifRequest;
 
 
@@ -31,6 +33,7 @@ public interface UsuarioService {
 	String getEmail();
 	UserDetails loadUserByUsername(String email);
 	void updatePassword(String email,String password)throws Exception;
+	userRecoveryPass recoveryPass(String email,Date expire);
 	
 	
 

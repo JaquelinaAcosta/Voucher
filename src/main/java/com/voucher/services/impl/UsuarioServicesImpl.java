@@ -1,7 +1,9 @@
 package com.voucher.services.impl;
 
 
+import java.security.SecureRandom;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +30,7 @@ import com.voucher.model.ERole;
 import com.voucher.model.Empresa;
 import com.voucher.model.Role;
 import com.voucher.model.Usuario;
+import com.voucher.model.Request.userRecoveryPass;
 import com.voucher.model.Request.usuModifRequest;
 import com.voucher.repository.EmpresaRepository;
 import com.voucher.repository.RoleRepository;
@@ -90,17 +93,33 @@ private static final Log logger = LogFactory.getLog(UsuarioServicesImpl.class);
 		Set<Role> roles = new HashSet<>();
 		strRoles.forEach(rol->{
 			switch (rol) {
-			case "Admin":
-				Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN);
-				roles.add(adminRole);
+			case "ADMIN_PARTNER":
+				Role role1=roleRepository.findByName(ERole.ADMIN_PARTNER);
+				roles.add(role1);
 				break;
-			case "Operativo":
-				Role modRole=roleRepository.findByName(ERole.OPERATIVO_EMPRESA);
-				roles.add(modRole);
+			case "ROOT":
+				Role role2=roleRepository.findByName(ERole.ROOT);
+				roles.add(role2);
 				break;
-			case "User":
-				Role userRole=roleRepository.findByName(ERole.ROLE_USER);
-				roles.add(userRole);
+			case "ADMIN":
+				Role role3=roleRepository.findByName(ERole.ADMIN);
+				roles.add(role3);
+				break;
+			case "VENTA":
+				Role role4 = roleRepository.findByName(ERole.VENTA);
+				roles.add(role4);
+				break;
+			case "OPERATIVO_EMPRESA":
+				Role role5=roleRepository.findByName(ERole.OPERATIVO_EMPRESA);
+				roles.add(role5);
+				break;
+			case "VISTA":
+				Role role6=roleRepository.findByName(ERole.VISTA);
+				roles.add(role6);
+				break;
+			default:
+				Role role7=roleRepository.findByName(ERole.VISTA);
+				roles.add(role7);
 				break;
 			}
 				});
@@ -199,5 +218,18 @@ private static final Log logger = LogFactory.getLog(UsuarioServicesImpl.class);
 		Usuario user = usuarioRepository.findByEmail(email);
 		user.setPassword(passwordEncoder.encode(password));
 		usuarioRepository.save(user);
+	}
+
+	@Override
+	public userRecoveryPass recoveryPass(String email, Date expire) {
+		// TODO Auto-generated method stub
+		SecureRandom random = new SecureRandom();
+		
+		
+		
+		
+		
+		
+		return null;
 	}
 }

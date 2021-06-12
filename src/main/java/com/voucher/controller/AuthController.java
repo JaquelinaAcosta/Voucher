@@ -22,12 +22,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.voucher.config.jwt.JwtUtils;
 import com.voucher.model.ERole;
+import com.voucher.model.Empresa;
 import com.voucher.model.Role;
 import com.voucher.model.Usuario;
 import com.voucher.model.Request.LoginRequest;
 import com.voucher.model.Request.SignupRequest;
 import com.voucher.model.Response.JwtResponse;
 import com.voucher.model.Response.MessageResponse;
+import com.voucher.repository.EmpresaRepository;
 import com.voucher.repository.RoleRepository;
 import com.voucher.repository.UsuarioRepository;
 import com.voucher.services.impl.UserDetailsImpl;
@@ -46,6 +48,8 @@ public class AuthController {
 	RoleRepository roleRepository; 
 	@Autowired
 	UsuarioServicesImpl usuService;
+	@Autowired
+	EmpresaRepository empresaRepository; 
 	
 	@Autowired
 	JwtUtils jwtUtils;
@@ -96,11 +100,10 @@ public class AuthController {
 		Usuario user = new Usuario();
 		user.setApellido(signUpRequest.getApellido());
 		user.setEmail(signUpRequest.getEmail());
-		//user.setEmpresa(signUpRequest.getEmpresa());
+		user.setEmpresa(signUpRequest.getEmpresa());
 		user.setEstado(signUpRequest.getEstado());
 		user.setNombre(signUpRequest.getNombre());
 		user.setPassword(encoder.encode(signUpRequest.getPassword()));
-		//user.setTelefono(signUpRequest.getTelefono());
 		Set<String> strRoles = signUpRequest.getRoles();
 		Set<Role> roles = new HashSet<>();
 		if(strRoles==null) {

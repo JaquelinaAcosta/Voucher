@@ -88,7 +88,6 @@ private static final Log logger = LogFactory.getLog(UsuarioServicesImpl.class);
 		logger.info("MODIFICACIÓN USUARIO");
 		//validarUsuario(usumodifrequest);
 		Usuario update=usuarioRepository.findByEmail(usumodifrequest.getEmail());
-		Empresa empresa=empresaRepository.findByempresa(usumodifrequest.getEmpresa());
 		Set<String> strRoles = usumodifrequest.getRoles();
 		Set<Role> roles = new HashSet<>();
 		strRoles.forEach(rol->{
@@ -125,7 +124,7 @@ private static final Log logger = LogFactory.getLog(UsuarioServicesImpl.class);
 				});
 		update.setRoles(roles);
 		update.setApellido(usumodifrequest.getApellido());
-		update.setEmpresa(empresa);
+		update.setEmpresa(usumodifrequest.getEmpresa());
 		update.setEstado(usumodifrequest.getEstado());
 		update.setNombre(usumodifrequest.getNombre());
 		update.setTelefono(usumodifrequest.getTelefono());

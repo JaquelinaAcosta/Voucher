@@ -12,7 +12,7 @@ public class usuModifRequest {
 	private String apellido;
 	private String telefono;
 	private Boolean estado;
-	private String empresa;
+	private Empresa empresa;
 	private Set<String> roles;
 	
 	public String getEmail() {
@@ -42,15 +42,16 @@ public class usuModifRequest {
 	public Boolean getEstado() {
 		return estado;
 	}
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
 	public void setEstado(Boolean estado) {
 		this.estado = estado;
 	}
-	public String getEmpresa() {
-		return empresa;
-	}
-	public void setEmpresa(String empresa) {
-		this.empresa = empresa;
-	}
+	
 	public Set<String> getRoles() {
 		return roles;
 	}

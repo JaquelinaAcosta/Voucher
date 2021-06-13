@@ -38,8 +38,8 @@ public class UsuarioController {
 		return usuarioService.updateUsuario(usumodifrequest);	
 	}
 
-    @RequestMapping(value="/usuario/modificarPassword",method = RequestMethod.PUT ,produces = MediaType.APPLICATION_JSON_VALUE, consumes =MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> updatePassword(@RequestBody @Valid updatePasswordRequest  updatepasswordrequest) throws Exception{
+    @RequestMapping(value="/usuario/modificarPassword",method = RequestMethod.POST ,produces = MediaType.APPLICATION_JSON_VALUE, consumes =MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> updatePassword(@RequestBody updatePasswordRequest  updatepasswordrequest) throws Exception{
     	try {		
     		if (updatepasswordrequest.getEmail()==null || updatepasswordrequest.getPassword()==null) {
     			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se recibio datos");

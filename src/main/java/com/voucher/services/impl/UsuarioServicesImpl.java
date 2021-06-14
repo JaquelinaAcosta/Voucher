@@ -212,11 +212,13 @@ private static final Log logger = LogFactory.getLog(UsuarioServicesImpl.class);
 		return null;
 	}
 	@Override
-	public void  updatePassword(String email, String password)throws Exception{
+	public Usuario  updatePassword(String email, String password)throws Exception{
 		// TODO Auto-generated method stub
 		Usuario user = usuarioRepository.findByEmail(email);
 		user.setPassword(passwordEncoder.encode(password));
 		usuarioRepository.save(user);
+		
+		return user;
 	}
 
 	@Override

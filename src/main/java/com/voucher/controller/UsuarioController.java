@@ -39,16 +39,21 @@ public class UsuarioController {
 	}
 
     @RequestMapping(value="/usuario/modificarPassword",method = RequestMethod.POST ,produces = MediaType.APPLICATION_JSON_VALUE, consumes =MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> updatePassword(@RequestBody updatePasswordRequest  updatepasswordrequest) throws Exception{
+	public Usuario updatePassword(@RequestBody updatePasswordRequest  updatepasswordrequest) throws Exception{
     	try {		
     		if (updatepasswordrequest.getEmail()==null || updatepasswordrequest.getPassword()==null) {
     			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se recibio datos");
     		}
-    		usuarioService.updatePassword(updatepasswordrequest.getEmail(),updatepasswordrequest.getPassword());
+    		Usuario user = usuarioService.updatePassword(updatepasswordrequest.getEmail(),updatepasswordrequest.getPassword());
+    		
+    		if(user == null) {
+    			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    		}
+    		
+    		return user;
     	} catch (Exception e) {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-    	return ResponseEntity.ok("Se modifico contrasenia correctamente");
     }
     
 	@RequestMapping(value = "/usuario/{usuarioId}", method = RequestMethod.DELETE)
